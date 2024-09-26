@@ -4,7 +4,20 @@ const port = 3000;
 
 app.get('/', (req,res) => {
     res.send("Hellooo Node API");
-})
+});
+
+
+app.get('/api/matches', (req,res) => {
+    res.send('Match History: ');
+});
+
+app.get('/api/predictions', (req,res) => {
+    res.send('Predicted Outcomes: ');
+});
+
+app.get('/api/statistics', (req,res) => {
+    res.send('Statistics: ');
+});
 
 
 app.listen(port, ()=> {
