@@ -1,20 +1,28 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-
-
-
-
 require('dotenv').config();
+
+
 
 app.get('/', (req,res) => {
     res.send("Hello Node API");
 });
 
 
-app.get('/api/matches', (req,res) => {
-    res.send('Match History: ');
-});
+app.get('/api/matches', async (req, res) => {
+    try {
+      await client.connect();
+      const collection = client.db('predictionEngine').collection('matches');
+      const matches = await collection.find({}).toArray();
+      res.json(matches);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Error fetching matches');
+    } finally {
+      await client.close();
+    }
+  });
 
 app.get('/api/predictions', (req,res) => {
     res.send('Predicted Outcomes: ');
@@ -24,10 +32,10 @@ app.get('/api/statistics', (req,res) => {
     res.send('Statistics: ');
 });
 
-
 app.listen(port, ()=> {
     console.log("node is running on port 3000");
 })
+
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = process.env.DB_KEY;
@@ -52,3 +60,5 @@ async function run() {
   }
 }
 run().catch(console.dir);
+
+
