@@ -32,6 +32,10 @@ app.get('/api/statistics', (req,res) => {
     res.send('Statistics: ');
 });
 
+app.get('/api/About', (req,res) => {
+  res.send('About: ');
+});
+
 app.listen(port, ()=> {
     console.log("node is running on port 3000");
 })
